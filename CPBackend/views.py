@@ -77,20 +77,28 @@ def start_mission_planner(request):
 
         # 获取当前时间作为文件名
         out_file_date = datetime.now().strftime("%Y%m%d%H%M%S")
-        file_path = f"C:/Users/25241/Desktop/program/mission_planner_files/{out_file_date}.json"
+
+        # 使用相对路径生成文件路径
+        base_dir = os.path.dirname(os.path.abspath(__file__))  # 获取当前文件所在目录
+        mission_planner_files_dir = os.path.join(base_dir, 'public', 'mission_planner_files')  # 获取相对目录
+        os.makedirs(mission_planner_files_dir, exist_ok=True)  # 确保目录存在
+        file_path = os.path.join(mission_planner_files_dir, f"{out_file_date}.json")
 
         # 将数据写入 JSON 文件
         with open(file_path, 'w', encoding='utf-8') as json_file:
             json.dump(mission_planner_file, json_file, ensure_ascii=False, indent=2)
 
+        # Java 程序路径使用相对路径
+        java_jar_path = os.path.join(base_dir, 'public', 'mcpp', 'mCPP-optimized-DARP.jar')
+
         # 执行 Java 程序
-        java_command = f"java -jar C:/Users/25241/Desktop/program/mcpp/mCPP-optimized-DARP.jar {file_path}"
+        java_command = f"java -jar {java_jar_path} {file_path}"
         result = subprocess.run(java_command, capture_output=True, text=True, shell=True)
 
         # 如果执行有错误
         if result.returncode != 0:
             return JsonResponse({"status": "error", "message": result.stderr},
-                                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         # 处理 Java 程序的输出
         mission_route_result = text2arr(result.stdout)

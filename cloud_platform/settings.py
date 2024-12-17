@@ -132,9 +132,16 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# 跨域处理
+# 跨域处理 允许的前端地址
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8088",  # 前端地址
+    "http://localhost:8088",
+    "http://47.96.137.124",
 ]
+# 允许跨域请求时携带认证信息（如 cookies 或 Authorization header）
+CORS_ALLOW_CREDENTIALS = True
 
-# CORS_ALLOW_CREDENTIALS = True  # 如果需要支持 cookies
+# CSRF 配置：允许的 CSRF 信任源
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8088",
+    "http://47.96.137.124",
+]

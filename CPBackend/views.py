@@ -85,8 +85,12 @@ def start_mission_planner(request):
         file_path = os.path.join(mission_planner_files_dir, f"{out_file_date}.json")
 
         # 将数据写入 JSON 文件
-        with open(file_path, 'w', encoding='utf-8') as json_file:
-            json.dump(mission_planner_file, json_file, ensure_ascii=False, indent=2)
+        try:
+            with open(file_path, 'w', encoding='utf-8') as json_file:
+                json.dump(mission_planner_file, json_file, ensure_ascii=False, indent=2)
+            print(f"JSON file written successfully: {file_path}")
+        except Exception as e:
+            print(f"Error writing JSON file: {e}")
 
         # Java 程序路径使用相对路径
         java_jar_path = os.path.join(base_dir, 'public', 'mcpp', 'mCPP-optimized-DARP.jar')

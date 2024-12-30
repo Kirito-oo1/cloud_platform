@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure--0=#ny2+)wfz(6!_dbw+7&)1jwxip3ksz^7j5cg_qt*(c22o-@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -135,7 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 跨域处理 允许的前端地址
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8088",
-    "http://47.96.137.124",
+    "http://8.152.202.243:8088",
 ]
 # 允许跨域请求时携带认证信息（如 cookies 或 Authorization header）
 CORS_ALLOW_CREDENTIALS = True
@@ -143,5 +143,5 @@ CORS_ALLOW_CREDENTIALS = True
 # CSRF 配置：允许的 CSRF 信任源
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8088",
-    "http://47.96.137.124",
+    "http://8.152.202.243:8088",
 ]
